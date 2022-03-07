@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <malloc.h>
+
+#ifdef _linux_
+#include <curses.h>
+#elif _WIN32
+#include <conio.h>
+#endif
+
+#define specialCaracters "!@#$\%^&*()-+"
+
+main()
+{
+    int size = sizeof(char);
+    char *string = malloc(size);
+    char current;
+    int okNum, okAZ, okaz, okSpecial;
+    printf("digite uma senha (pressione ESC para cancelar):\n");
+    string[0] = '\0';
+    do
+    {
+        current = getch();
+        if (current == 27) // esc caracter
+            break;
+        if (current != '\r')
+        {
+            string[size - 1] = current;
+            printf("*");
+            string = realloc(string, ++size);
+            string[size - 1] = '\0';
+        }
+        else
+        {
+            okNum = okAZ = okaz = okSpecial = 0;
+            for (int i = 0; i < size; i++)
+            {
+                current = string[i];
+                if (current >= '0' && current <= '9')
+                    okNum++;
+                if (current >= 'A' && current <= 'Z')
+                    okAZ++;
+                if (current >= 'a' && current <= 'z')
+                    okaz++;
+                for (int j = 0; j < (sizeof specialCaracters - 1); j++)
+                    if (specialCaracters[j] == current)
+                        okSpecial++;
+            }
+            if (okNum != 0 && okAZ != 0 && okaz != 0 && okSpecial != 0)
+                break;
+            printf("\n");
+            if (okNum == 0)
+                printf("precisa conter numeros\n");
+            if (okAZ == 0)
+                printf("precisa conter letras mauisculas\n");
+            if (okaz == 0)
+                printf("precisa conter letras minusculas\n");
+            if (okSpecial == 0)
+                printf("precisa conter caracteres especiais ex: %s\n", specialCaracters);
+            printf("digite uma senha (pressione ESC para cancelar):\n");
+            size = sizeof(char);
+            string = realloc(string, size);
+        }
+    } while (1);
+    printf("\npassword is: %s\n", string);
+}
