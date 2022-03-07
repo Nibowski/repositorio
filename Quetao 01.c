@@ -40,4 +40,3 @@ int main() {
    printf("saída %d ",lista1[sel]);
   }
 }
-
