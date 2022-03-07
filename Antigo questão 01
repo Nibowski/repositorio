@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int i,j,l, ent, ast, esp ;
+int matriz[10][10]; 
+int astt[10]; 
+int estt[10]; 
+
+main()
+{ 
+
+	printf("Digte o numero a escada: ");
+	scanf("%d",&ent);
+	
+
+	for (i=0;i<ent;i++)
+	{
+		esp=ent-i;
+		ast=i+1;
+		for(l=1;l<esp;l++)
+		{
+			printf(" ");
+
+ 		}
+		for(j=0;j<ast;j++)
+		{
+			printf("*");
+		}
+		printf("\n");
+
+	}
+}
